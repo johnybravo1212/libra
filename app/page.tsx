@@ -1,95 +1,119 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import Form from '@/components/Form';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/firestore';
+import { remark } from 'remark';
+import html from 'remark-html';
 
-export default function Home() {
-  return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
+const firebaseConfig = {
+  apiKey: "AIzaSyAX1g0IAGWILBT32mbSVZTCW3padJ99tEE",
+  authDomain: "buoyant-aileron-414616.firebaseapp.com",
+  projectId: "buoyant-aileron-414616",
+  storageBucket: "buoyant-aileron-414616.appspot.com",
+  messagingSenderId: "475114248805",
+  appId: "1:475114248805:web:1969828146dc8e5e96048c",
+  measurementId: "G-SCEYYN22VH"
+};
+
+// Ensure Firebase is initialized
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+
+}
+const firestore = firebase.firestore();
+
+
+export default async function Home() {
+    const collectionRef = firestore.collection('homepage');
+    const snapshot = await collectionRef.get();
+    const data = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+    const left_container = await remark().use(html).process(data?.[0]?.left_container);
+    const right_container = await remark().use(html).process(data?.[0]?.right_container);
+
+return <>
+  <header className="header">
+    <div className="header-container">
+      <h1 className="header__title">
+        {data?.[0]?.hero_section?.title}
+      </h1>
+      <p className="header__text">
+      {data?.[0]?.hero_section?.subtitle}
+
+      </p>
+      <div className="header__video">
+      <video controls preload="none" >
+      <source src={data?.[0]?.videoo} type="video/mp4" />
+      
+    </video>
+        <p className="header__video-text">
+        {data?.[0]?.hero_section?.text}
+
         </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+      </div>
+      <div className="header__register">
+        <a
+          href={data?.[0]?.hero_section?.button_link}
+
+          className="header__register-link"
+        >
+                  {data?.[0]?.hero_section?.button_text}
+
+        </a>
+      </div>
+    </div>
+  </header>
+  <section className="libra">
+    <div className="container">
+      <div className="row">
+        <div className="col-xl-6">
+          <div className="libra__logo">
+            <img src="./logo.svg" alt="Логотип Libra" />
+          </div>
+          <div className="libra__wrapper desctop-form" dangerouslySetInnerHTML={{__html: left_container?.value}}>
+          </div>
+        </div>
+        <div className="col-xl-6">
+          <Form data={data}/>
+          <div className="libra__wrapper mobile-form" dangerouslySetInnerHTML={{__html: left_container?.value}}>
+            
+          </div>
         </div>
       </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
+    </div>
+  </section>
+  <section className="meta">
+    <div className="container">
+      <div className="row">
+        <div className="col-xl-6">
+          <div className="meta__img">
+            <img src={ data?.[0]?.left_image} alt="Mark Zuckerberg" />
+          </div>
+        </div>
+        <div className="col-xl-6">
+          <div className="meta__wrapper" dangerouslySetInnerHTML={{__html: right_container?.value}}>
+            
+          </div>
+          <div className="libra__logo meta__logo">
+            <img src="./logo.svg" alt="logo" />
+          </div>
+        </div>
       </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+    </div>
+  </section>
+  <footer className="footer">
+    <div className="container">
+      <div className="footer__copy">
+        <p>
+           {data?.[0]?.footer_override}
+        </p>
       </div>
-    </main>
-  );
+      <div className="footer__email"></div>
+      <div className="footer__pr">
+      </div>
+    </div>
+  </footer>
+</>
+
 }

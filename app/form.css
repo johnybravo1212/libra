@@ -1,0 +1,112 @@
+/* Start Form */
+
+.register-form {
+	background-color: #FFFFFF;
+	padding: 30px 23px 30px;
+	border-radius: 9px;
+}
+
+.form-input-main {
+	margin-bottom: 10px;
+}
+
+.form-input-main input,
+.form-input-main select {
+	font-family: 'Inter', sans-serif;
+	height: 42px;
+	width: 100%;
+	padding-left: 10px;
+	border: none;
+	background: rgba(0, 0, 0, 0.06);
+	border-radius: 5px;
+	font-weight: 400;
+	font-size: 18px;
+	color: #000;
+}
+
+.form-input-main select {
+	margin: 0;
+	width: 100%;
+}
+
+.form-input-main input::placeholder,
+.form-input-main select::placeholder {
+	color: rgb(126, 126, 126) !important;
+}
+
+
+button[name="submitBtn"] {
+	width: 300px;
+	height: 54px;
+	background: #016ABC;
+	box-shadow: inset 0px -2px 0px rgba(0, 0, 0, 0.25);
+	border-radius: 33px;
+	text-align: center;
+	letter-spacing: -0.05em;
+	text-transform: uppercase;
+	color: #FFFFFF;
+	text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.25);
+	font-size: 24px;
+	font-weight: 700;
+	border: none;
+	margin: 0 auto;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.form-header-text,
+.form-footer-text {
+	color: black;
+	font-size: 14px;
+	text-align: center;
+}
+
+.form-header-text {
+	margin-bottom: 20px;
+}
+
+.form-footer-text {
+	margin-top: 20px;
+}
+
+.form-input-main label[for="nationality"] {
+	width: 100%;
+	display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.form-input-main label[for="policy"] {
+	display: flex;
+	align-items: center;
+	gap: 15px;
+}
+
+.form-input-main label[for="age"] {
+	font-size: 14px;
+	display: flex;
+	flex-direction: column-reverse;
+	align-items: flex-start;
+}
+
+.form-input-main input[name="policy"] {
+	width: 20px;
+	height: 20px;
+	padding: 0;
+	margin: 0;
+}
+
+.iti--allow-dropdown input,
+.iti--allow-dropdown input[type=tel],
+.iti--allow-dropdown input[type=text],
+.iti--separate-dial-code input,
+.iti--separate-dial-code input[type=tel],
+.iti--separate-dial-code input[type=text] {
+	width: 100%;
+	padding-left: 96px !important;
+}
+
+/* End Form */
