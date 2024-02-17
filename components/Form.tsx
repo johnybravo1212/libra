@@ -29,14 +29,13 @@ function Form({data}: Props) {
     async function handleSubmit (event: FormEvent<HTMLFormElement>)  {
         event.preventDefault();
     
-        const formData = new FormData(event.target);
+        const formData = new FormData(event.currentTarget);
         const userData = {
           name: formData.get('name'),
           surname: formData.get('surname'),
           email: formData.get('email'),
           phone: formData.get('phone')
         };
-        console.log(userData)
         try {
           await firestore.collection('users').add(userData);
           console.log('Data added successfully!');

@@ -3,6 +3,21 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import { remark } from 'remark';
 import html from 'remark-html';
+type Data = {
+  id: string;
+  left_container?: string;
+  right_container?: string;
+  hero_section?: {
+    title: string;
+    subtitle: string;
+    text: string;
+    button_link: string;
+    button_text: string;
+  };
+  videoo: string;
+  left_image: string;
+  footer_override: string;
+};
 
 const firebaseConfig = {
   apiKey: "AIzaSyAX1g0IAGWILBT32mbSVZTCW3padJ99tEE",
@@ -25,10 +40,10 @@ const firestore = firebase.firestore();
 export default async function Home() {
     const collectionRef = firestore.collection('homepage');
     const snapshot = await collectionRef.get();
-    const data = snapshot.docs.map(doc => ({
+    const data: Data[] = snapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data()
-    }));
+    }) as Data);
     const left_container = await remark().use(html).process(data?.[0]?.left_container);
     const right_container = await remark().use(html).process(data?.[0]?.right_container);
 
