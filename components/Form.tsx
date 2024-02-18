@@ -2,6 +2,7 @@
 import React, { FormEvent } from 'react'
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
+import { useRouter } from 'next/navigation';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAX1g0IAGWILBT32mbSVZTCW3padJ99tEE",
@@ -25,7 +26,7 @@ type Props = {
 const firestore = firebase.firestore();
 
 function Form({data}: Props) {
-    
+    const router = useRouter();
     async function handleSubmit (event: FormEvent<HTMLFormElement>)  {
         event.preventDefault();
     
@@ -38,6 +39,7 @@ function Form({data}: Props) {
         };
         try {
           await firestore.collection('users').add(userData);
+          router.push('/thanks');
           console.log('Data added successfully!');
           // Optionally, you can redirect the user to a different page after form submission
         } catch (error) {
